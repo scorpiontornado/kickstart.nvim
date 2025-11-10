@@ -980,7 +980,7 @@ require('lazy').setup({
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
+  -- NOTE: The import below can automckatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
@@ -1011,6 +1011,25 @@ require('lazy').setup({
     },
   },
 })
+
+-- [Nick, 2025-11-10] Folding
+-- https://www.jackfranklin.co.uk/blog/code-folding-in-vim-neovim/
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+-- vim.opt.foldcolumn = "0"
+vim.opt.foldtext = '' -- syntax highlight first line of fold only (only available in nightly?)
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 1
+vim.opt.foldnestmax = 4
+
+-- [Nick, 2025-11-10] Enable modelines & ensure expression evaluation is disabled
+vim.opt.modeline = true
+vim.opt.modelineexpr = false
+
+-- NOTE: [Nick, 2025-11-10] Inspiration of options to use:
+-- Folding: foldmethod foldlevel
+-- Indentation Style: tabstop (ts), softtabstop (sts), shiftwidth (sw), expandtab (et)
+-- Indentation Behavior: autoindent (ai), smartindent (si)
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
