@@ -58,4 +58,36 @@ return {
       { '<c-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
     },
   },
+  {
+    -- https://github.com/CopilotC-Nvim/CopilotChat.nvim
+    'CopilotC-Nvim/CopilotChat.nvim',
+    --  lazy = true,
+    dependencies = {
+      { 'nvim-lua/plenary.nvim', branch = 'master' },
+    },
+    -- build = "make tiktoken",
+    opts = {
+      model = 'gemini-3-pro-preview', -- or 'gpt-5.1-codex', 'claude-sonnet-4.5' etc (list with $)
+      window = {
+        width = 0.33, -- 0.25 was a bit too narrow with a terminal alongside
+      },
+      auto_insert_mode = true, -- Enter insert mode when opening
+    },
+    -- https://github.com/dusty-phillips/dotfiles/blob/93b14291b258210d30c4aabb876629bca330feb2/.config/nvim/lua/plugins/third-party.lua#L37
+    -- (from https://www.reddit.com/r/neovim/comments/1cuzrlw/comment/l4pu0dp/)
+    keys = {
+      {
+        '<Leader>ch',
+        ":'<,'>CopilotChat<CR>",
+        mode = { 'v' },
+        desc = 'Copilot Chat Selection',
+      },
+      {
+        '<Leader>ch',
+        ':CopilotChatToggle<CR>',
+        mode = { 'n' },
+        desc = 'Toggle Copilot Chat',
+      },
+    },
+  },
 }

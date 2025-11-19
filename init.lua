@@ -1019,7 +1019,7 @@ vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 -- vim.opt.foldcolumn = "0"
 vim.opt.foldtext = '' -- syntax highlight first line of fold only (only available in nightly?)
 vim.opt.foldlevel = 99
-vim.opt.foldlevelstart = 1
+-- vim.opt.foldlevelstart = 1
 vim.opt.foldnestmax = 4
 
 -- [Nick, 2025-11-10] Enable modelines & ensure expression evaluation is disabled
