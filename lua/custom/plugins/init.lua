@@ -77,17 +77,52 @@ return {
     -- (from https://www.reddit.com/r/neovim/comments/1cuzrlw/comment/l4pu0dp/)
     keys = {
       {
-        '<Leader>ch',
+        '<Leader>cc',
         ":'<,'>CopilotChat<CR>",
         mode = { 'v' },
         desc = 'Copilot Chat Selection',
       },
+      -- {
+      --   '<Leader>ch',
+      --   ':CopilotChatToggle<CR>',
+      --   mode = { 'n' },
+      --   desc = 'Toggle Copilot Chat',
+      -- },
       {
-        '<Leader>ch',
-        ':CopilotChatToggle<CR>',
+        '<Leader>cc',
+        function()
+          local chat = require 'CopilotChat'
+          -- 1. Save global split direction
+          local current_setting = vim.opt.splitright:get()
+          -- 2. Force split to go Left
+          vim.opt.splitright = false
+          -- 3. Toggle Window
+          chat.toggle()
+          -- 4. Restore global split direction
+          vim.opt.splitright = current_setting
+        end,
         mode = { 'n' },
-        desc = 'Toggle Copilot Chat',
+        desc = 'Toggle Copilot Chat (Left)',
       },
     },
+    -- Define the config function to apply opts and set up the autocommand
+    config = function(_, opts)
+      local chat = require 'CopilotChat'
+      chat.setup(opts)
+
+      vim.api.nvim_create_autocmd('BufWinEnter', {
+        pattern = '*',
+        callback = function()
+          if vim.bo.filetype == 'copilot-chat' then
+            -- vim.schedule ensures this runs AFTER the window is fully drawn
+            vim.schedule(function()
+              vim.opt_local.number = false
+              vim.opt_local.relativenumber = false
+              vim.opt_local.signcolumn = 'no'
+            end)
+          end
+        end,
+      })
+    end,
   },
 }
